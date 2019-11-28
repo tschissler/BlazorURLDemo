@@ -1,0 +1,74 @@
+﻿@page "/"
+@page "/{SelectedProductId}"
+@using BlazorURLDemo.Data
+@using Microsoft.AspNetCore.Components
+
+<h1>Hello, Demo</h1>
+
+<p>Select a product to show details</p>
+<button class="btn btn-dark" @onclick="@(() => SelectedProductId="1")">Product 1</button>
+<button class="btn btn-dark" @onclick="@(() => SelectedProductId="2")">Product 2</button>
+<button class="btn btn-dark" @onclick="@(() => SelectedProductId="3")">Product 3</button>
+<button class="btn btn-dark" @onclick="@(() => SelectedProductId="4")">Product 4</button>
+<button class="btn btn-dark" @onclick="@(() => SelectedProductId="5")">Product 5</button>
+
+<div style='padding-top: 2rem; visibility: @(SelectedProduct!=null?"":"collapse")'>
+    You have selected this Product:
+    <h1>@(SelectedProduct != null ? SelectedProduct.ProductName : "")</h1>
+    <p>@(SelectedProduct != null ? SelectedProduct.Description : "")</p>
+</div>
+
+@code
+{
+    [Parameter]
+    public string SelectedProductId
+    {
+        set
+        {
+            if (value != null)
+            {
+                SelectedProduct = Products.Find(i => i.Id == Int32.Parse(value.ToString()));
+            }
+        }
+    }
+    private Product SelectedProduct;
+    private List<Product> Products
+        = new List<Product>
+        {
+            new Product()
+            {
+                Id = 1,
+                ProductName = "Product 1",
+                Description = "Description for Product 1"
+            },
+            new Product()
+            {
+                Id = 2,
+                ProductName = "Product 2",
+                Description = "Description for Product 2"
+            },
+            new Product()
+            {
+                Id = 3,
+                ProductName = "Product 3",
+                Description = "Description for Product 3"
+            },
+            new Product()
+            {
+                Id = 4,
+                ProductName = "Product 4",
+                Description = "Description for Product 4"
+            },
+            new Product()
+            {
+                Id = 5,
+                ProductName = "Product 5",
+                Description = "Description for Product 5"
+            }
+            };
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
+}
